@@ -1,8 +1,10 @@
 from typing import Optional
 
-from address.list import fetch_addresses
+from geo.list import fetch_geo
+from geo.model import GeoItem
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
 
@@ -23,6 +25,7 @@ app.add_middleware(
 async def root():
   return {"message": "Hello World"}
 
-@app.get("/addresses")
-async def addresses():
-  return fetch_addresses()
+@app.get("/geo")
+async def geo() -> list[GeoItem]:
+  response = fetch_geo()
+  return response.data
