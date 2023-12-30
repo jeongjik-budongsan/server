@@ -1,5 +1,7 @@
 from typing import Optional
 
+from agency.model import Agency
+from agency.list import fetch_agencies
 from geo.list import fetch_geo
 from geo.model import GeoItem
 from fastapi import FastAPI
@@ -28,4 +30,9 @@ async def root():
 @app.get("/geo")
 async def geo() -> list[GeoItem]:
   response = fetch_geo()
+  return response.data
+
+@app.get("/agencies")
+async def agencies(geo_id: int) -> list[Agency]:
+  response = fetch_agencies(geo_id)
   return response.data
