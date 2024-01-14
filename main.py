@@ -4,6 +4,8 @@ from agency.model import Agency
 from agency.list import fetch_agencies
 from geo.list import fetch_geo
 from geo.model import GeoItem
+from review.model import Review
+from review.list import fetch_reviews
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -35,4 +37,9 @@ async def geo() -> list[GeoItem]:
 @app.get("/agencies")
 async def agencies(geo_id: int) -> list[Agency]:
   response = fetch_agencies(geo_id)
+  return response.data
+
+@app.get("/reviews")
+async def reviews(agency_id: int) -> list[Review]:
+  response = fetch_reviews(agency_id)
   return response.data
