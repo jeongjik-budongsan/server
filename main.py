@@ -1,7 +1,7 @@
 from typing import Optional
 
 from agency.model import Agency
-from agency.list import fetch_agencies
+from agency.views import fetch_agencies
 from geo.list import fetch_geo
 from geo.model import GeoItem
 from review.model import Review
