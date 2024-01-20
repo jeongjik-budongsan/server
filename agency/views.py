@@ -25,3 +25,17 @@ def fetch_agencies(geo_id: int):
     }
   
   return agencies
+
+def fetch_agency(id: int):
+  agencies = supabase.table('agency')\
+    .select("*, reviews(*)")\
+    .eq('id', id)\
+    .limit(1).execute().data
+  
+  if agencies:
+    agency = agencies[0]
+    agency['review'] = {
+      'items': agency['reviews'],
+      'average': average(agency['reviews'])
+    }
+    return agency

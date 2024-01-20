@@ -1,12 +1,13 @@
 from typing import Optional
 
 from agency.model import Agency
-from agency.views import fetch_agencies
+from agency.views import fetch_agencies, fetch_agency
 from geo.list import fetch_geo
 from geo.model import GeoItem
 from review.model import Review
 from review.list import fetch_reviews
 from fastapi import FastAPI
+from starlette.exceptions import HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -38,6 +39,13 @@ async def geo() -> list[GeoItem]:
 async def agencies(geo_id: int) -> list[Agency]:
   response = fetch_agencies(geo_id)
   return response.data
+
+@app.get("/agencies/{id}")
+async def agency(id: int) -> Agency:
+  response = fetch_agency(id)
+  if response is None:
+    raise HTTPException(status_code=404, detail="Agency not found")
+  return response
 
 @app.get("/reviews")
 async def reviews(agency_id: int) -> list[Review]:
