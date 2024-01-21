@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 
 origins = [
-    "https://frontend-e9r.pages.dev/",
+    "https://frontend-e9r.pages.dev",
     "http://localhost:5173"
 ]
 
